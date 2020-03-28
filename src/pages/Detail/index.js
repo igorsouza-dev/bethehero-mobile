@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as MailComposer from 'expo-mail-composer';
 import { Feather } from '@expo/vector-icons';
 import { Image, TouchableOpacity, Linking } from 'react-native';
@@ -21,20 +21,27 @@ import {
 
 export default function Detail() {
   const navigation = useNavigation();
-  const message =
-    'Olá DFDF, estou entrando em contato pois gostaria de ajudar no caso "Cadelinha atropelada" com o valor de 120 reais';
+  const route = useRoute();
+  const incident = route.params.incident;
+  const valor = Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  }).format(incident.value);
+  const message = `Olá ${incident.name}, estou entrando em contato pois gostaria de ajudar no caso "${incident.title}" com o valor de ${valor} reais`;
   function navigateBack() {
     navigation.goBack();
   }
   function sendMail() {
     MailComposer.composeAsync({
-      subject: 'Herói do caso: fsdfsdf',
-      recipients: ['dfsdfsd@dsfd,com'],
+      subject: `Herói do caso: ${incident.title}`,
+      recipients: [incident.email],
       body: message,
     });
   }
   function sendWhatsapp() {
-    Linking.openURL(`whatsapp://send?phone=5599999999&text=${message}`);
+    Linking.openURL(
+      `whatsapp://send?phone=${incident.whatsapp}&text=${message}`
+    );
   }
   return (
     <Container>
@@ -45,14 +52,19 @@ export default function Detail() {
         </TouchableOpacity>
       </Header>
       <Incident>
-        <IncidentProperty>ONG:</IncidentProperty>
-        <IncidentValue>APAD</IncidentValue>
+        <IncidentProperty style={{ marginTop: 0 }}>ONG:</IncidentProperty>
+        <IncidentValue>
+          {incident.name} de {incident.city}/{incident.uf}
+        </IncidentValue>
 
         <IncidentProperty>CASO:</IncidentProperty>
-        <IncidentValue>dfs fsd fsdf sd fsd</IncidentValue>
+        <IncidentValue>{incident.title}</IncidentValue>
+
+        <IncidentProperty>DESCRIÇÃO:</IncidentProperty>
+        <IncidentValue>{incident.description}</IncidentValue>
 
         <IncidentProperty>VALOR:</IncidentProperty>
-        <IncidentValue>R$ 120,00</IncidentValue>
+        <IncidentValue>{valor}</IncidentValue>
       </Incident>
       <ContactBox>
         <ContactBoxTitle>Salve o dia!</ContactBoxTitle>
