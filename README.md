@@ -9,7 +9,7 @@
 The main objective of this project is to provide a way to help Non-Governmental Organisation find "Heroes" to help in their causes. This can be done by providing a [web](https://github.com/igorsouza-dev/bethehero-frontend) interface for the NGO to insert their needs and then a "Hero" can find these needs using a [mobile app](https://github.com/igorsouza-dev/bethehero-mobile) and get in touch with the organization.
 You will need the backend of this project and you can find it [here](https://github.com/igorsouza-dev/bethehero-backend).
 
-<div style="display: flex; justify-content: center">
+<div style="display: flex; justify-content: center" align="center">
   <img src="assets/demo2.jpeg" width="200">
   <img src="assets/demo1.jpeg" width="200">
 </div>
@@ -42,4 +42,9 @@ All you need to do is run `yarn` at the root of the project in order to install 
 
 ## Running
 
+Before starting, make sure to change the `baseURL` address at the `src/services/api.js` to point to your backend IP or URL.
 Run the command `yarn start` for a developer environment. This will execute expo. Open the Expo app in your emulator or your device and read the generated QR Code.
+
+## License
+
+This is a open-sourced software licensed under the [MIT license](LICENSE.md).
